@@ -56,3 +56,5 @@ If CUDA memory is insufficient, reduce `--batch 4` to `--batch 2`
 - Keep README updates synchronized with script behavior
 - Keep generated YOLO runs under `runs/obb/`; delete failed or accidental runs only after checking the exact directory
 - Keep `.dataset_views/`, `runs/`, model weights, and cache files out of git
+- For duplicate prediction boxes, prefer YOLO native `iou` and `agnostic_nms=True` prediction commands so visualizations keep the native Ultralytics style
+- Do not keep custom redraw scripts for native YOLO visualizations unless there is a clear reason

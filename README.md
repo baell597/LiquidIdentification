@@ -237,6 +237,18 @@ yolo predict model=yolo11m-obb.pt source=/mnt/e/LiquidIdentification/testDataset
 yolo predict model=runs/obb/<run_name>/weights/best.pt source=/mnt/e/LiquidIdentification/testDataset/images
 ```
 
+如果预测结果中出现重复框，优先使用 YOLO 原生 NMS 参数重新预测，不要手动改标签后再自绘可视化图：
+
+```bash
+yolo predict model=runs/obb/bottle_01_yolo11m_640_b4/weights/best.pt source=runs/predict_errors/val_bottle_01/images project=/mnt/e/LiquidIdentification/runs/predict_errors/val_bottle_01 name=pred_native_nms_iou50 save=True save_txt=True save_conf=True iou=0.5 agnostic_nms=True exist_ok=True
+```
+
+```bash
+yolo predict model=runs/obb/bottle_01_yolo11m_640_b4/weights/best.pt source=runs/predict_errors/test_bottle_01/images project=/mnt/e/LiquidIdentification/runs/predict_errors/test_bottle_01 name=pred_native_nms_iou50 save=True save_txt=True save_conf=True iou=0.5 agnostic_nms=True exist_ok=True
+```
+
+`iou=0.5` 表示重叠区域与总区域的比例超过 0.5 时按重复框处理，`agnostic_nms=True` 表示不同类别之间也参与去重，最终可视化结果保留 Ultralytics 原生样式
+
 ## English
 
 This project uses Ultralytics YOLO OBB to identify the liquid state in bottle images and supports two label sets:
@@ -471,3 +483,15 @@ Predict with a trained checkpoint:
 ```bash
 yolo predict model=runs/obb/<run_name>/weights/best.pt source=/mnt/e/LiquidIdentification/testDataset/images
 ```
+
+If duplicate boxes appear in prediction results, prefer YOLO native NMS parameters and rerun prediction instead of editing labels and redrawing visualization images manually:
+
+```bash
+yolo predict model=runs/obb/bottle_01_yolo11m_640_b4/weights/best.pt source=runs/predict_errors/val_bottle_01/images project=/mnt/e/LiquidIdentification/runs/predict_errors/val_bottle_01 name=pred_native_nms_iou50 save=True save_txt=True save_conf=True iou=0.5 agnostic_nms=True exist_ok=True
+```
+
+```bash
+yolo predict model=runs/obb/bottle_01_yolo11m_640_b4/weights/best.pt source=runs/predict_errors/test_bottle_01/images project=/mnt/e/LiquidIdentification/runs/predict_errors/test_bottle_01 name=pred_native_nms_iou50 save=True save_txt=True save_conf=True iou=0.5 agnostic_nms=True exist_ok=True
+```
+
+`iou=0.5` treats boxes as duplicates when overlap over union is above 0.5, `agnostic_nms=True` allows suppression across different classes, and the final visualization keeps the native Ultralytics style
