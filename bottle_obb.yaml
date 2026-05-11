@@ -1,0 +1,15 @@
+# Dataset root
+path: /mnt/e/LiquidIdentification/bottleDataset
+
+# Image directories relative to path
+train: images/train
+val: images/val
+test: images/test
+
+# Classes
+nc: 4
+names:
+  0: none
+  1: little
+  2: mid
+  3: much
