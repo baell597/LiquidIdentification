@@ -3,6 +3,11 @@ X-AnyLabeling-v4.0.0-beta.5-CPU.exe
 # YOLO output directories
 run/
 runs/
+.dataset_views/
+.tmp/
+
+# Ultralytics dataset caches
+*.cache
 
 # Downloaded/trained model weights
 *.pt
